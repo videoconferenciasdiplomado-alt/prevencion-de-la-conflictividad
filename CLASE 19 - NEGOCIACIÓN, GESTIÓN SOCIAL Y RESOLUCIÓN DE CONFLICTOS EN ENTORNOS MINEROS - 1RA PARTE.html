@@ -1,0 +1,1600 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <style>
+      /* Estilos de balanceo de texto */
+      .header-content-box,
+      .header-compact-title,
+      .footer,
+      .section-title,
+      .subsection-title {
+        text-wrap: balance;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      :root {
+        /* Colores Principales del Diseño (Acentos y Degradados) */
+        /* ======================================================= */
+        --color-principal: #00beff; /* Cian Brillante para acentos, bordes y el inicio del degradado principal */
+        --color-secundario: #1e50cd; /* Azul Medio, parte final del degradado de acento */
+
+        /* Fondos Oscuros de la Interfaz */
+        /* ======================================================= */
+        --fondo-oscuro-claro: #002a52; /* Fondo de secciones y contenido */
+        --fondo-oscuro-fuerte: #001a33; /* Fondo del encabezado (header) y pie de página (footer) */
+        /* ======================================================= */
+        --fondo-oscuro-medio: #003366; /* Fondo de encabezados y cajas de contenido */
+        --fondo-borde-claro: #004080; /* Bordes ligeros y color de fondo al hacer hover en encabezados */
+        --fondo-sombra-azul-header: #0050a0; /* ¡NUEVO! Sombra en el header */
+
+        /* Colores de Texto y Fondo General del Body */
+        /* ======================================================= */
+        --texto-blanco-1: #ffffff; /* Blanco puro para títulos y texto en fondo muy oscuro */
+        --texto-claro-2: #e6e6e6; /* Texto principal y claro */
+        --texto-medio-3: #cccccc; /* Texto de contenido de item (un poco más tenue) */
+
+        /* ======================================================= */
+        --fondo-body-inicio: #99e5ff; /* Color de inicio del degradado de fondo del body */
+        --fondo-body-fin: #a5b9eb; /* Color de final del degradado de fondo del body */
+
+        /* Colores de Acento Específicos (YouTube, Búsqueda) */
+        /* ======================================================= */
+        --rojo-youtube-claro: #e60000;
+        --rojo-youtube-fuerte: #a30000;
+        --timestamp-youtube: #ffcccc;
+        --fondo-resaltado: #00c339; /* Verde para el fondo del texto buscado */
+
+        /* Bases RGB para Transparencias (RGBA) */
+        /* ======================================================= */
+        --sombra-rgb: 0, 0, 0; /* Negro puro: Usado para sombras generales y profundidad */
+        --acento-rgb: 0, 190, 255; /* Cian Brillante: Usado para brillos y sombras de acento */
+        --rojo-rgb: 230, 0, 0; /* Rojo Puro: Usado para sombras de enlaces de YouTube */
+        /* ======================================================= */
+        --gradient-principal: linear-gradient(135deg, var(--color-principal) 0%, var(--color-secundario) 100%);
+      }
+
+      body {
+        background: linear-gradient(135deg, var(--fondo-body-inicio) 0%, var(--fondo-body-fin) 100%);
+        line-height: 1.2;
+        scroll-behavior: smooth;
+      }
+
+      strong#tituloDiplomado {
+        font-weight: 900;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      @keyframes slideDownSutil {
+        0% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header.animacion-inicial {
+        animation: slideDownSutil 0.4s ease-out 1;
+        animation-fill-mode: forwards;
+        will-change: transform, opacity;
+      }
+
+      .header {
+        position: relative;
+        width: 100%;
+        z-index: 1000;
+        padding: 20px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        box-shadow: 0 5px 15px rgba(var(--sombra-rgb), 0.5);
+        text-align: center;
+        will-change: transform;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header-text-box {
+        display: grid;
+        gap: 10px;
+        word-break: break-word;
+        margin: 0 15px;
+      }
+
+      .header.compact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+      }
+
+      .header-spacer {
+        display: none;
+        transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header.compact + .header-spacer {
+        display: block;
+      }
+
+      .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .header.compact .header-top {
+        display: none;
+      }
+
+      .logo {
+        width: 140px;
+        height: auto;
+        margin: 0 15px;
+        transition: all 0.3s ease;
+        vertical-align: middle;
+      }
+
+      .header.compact .logo {
+        width: 90px;
+        margin: 0 10px;
+      }
+
+      .header .logo.compact-logo {
+        display: none;
+      }
+
+      .header.compact .logo.compact-logo {
+        display: block;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 900;
+      }
+
+      .header.compact h1 {
+        font-size: 1rem;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+      }
+
+      .header-content-box {
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 20px 20px;
+        box-shadow: 0 8px 20px rgba(var(--acento-rgb), 0.6);
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        opacity: 1;
+        transform: translateY(0);
+        will-change: transform;
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .header-content-box {
+        opacity: 0;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: 0;
+        transform: translateY(-10px);
+      }
+
+      .header-content-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(var(--acento-rgb), 0.8);
+      }
+
+      .header-bottom-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header-second-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header.compact .header-bottom-row {
+        flex-grow: 1;
+      }
+
+      .logo-and-title {
+        opacity: 0;
+        overflow: hidden;
+        transform: translateY(-10px);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .logo-and-title {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .header.compact .header-bottom-row .logo-and-title {
+        will-change: transform;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+        width: 100%;
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        gap: 10px;
+      }
+
+      .header.compact .header-bottom-row .logo-and-title:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .header-compact-title {
+        display: none;
+        color: var(--texto-blanco-1);
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 10px;
+        white-space: normal;
+      }
+
+      .header.compact .header-compact-title {
+        display: block;
+      }
+
+      .search-bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 450px;
+        background-color: var(--fondo-oscuro-medio);
+        border: 2px solid var(--fondo-borde-claro);
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(var(--sombra-rgb), 0.25);
+        will-change: border-color, background-color;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease,
+          background-color 0.3s ease;
+      }
+
+      .search-bar:focus-within {
+        border-color: var(--fondo-sombra-azul-header);
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .clear-search {
+        cursor: pointer;
+        color: var(--texto-claro-2);
+        padding: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        display: none;
+        transition: color 0.2s ease;
+        transform: scale(1.5);
+      }
+
+      .clear-search:hover {
+        color: var(--texto-blanco-1);
+      }
+
+      .search-bar input {
+        flex-grow: 1;
+        padding: 10px 18px;
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--texto-claro-2);
+        background-color: transparent;
+        border: none;
+        outline: none;
+        min-width: 0px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .header.compact .search-bar input {
+        padding: 10px 20px;
+      }
+
+      .search-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .action-button {
+        background: var(--gradient-principal);
+        border: none;
+        color: var(--texto-blanco-1);
+        padding: 8px 18px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        will-change: transform;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        max-width: 150px;
+        white-space: normal;
+      }
+
+      .action-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .search-bar .action-button {
+        margin: 5px;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      @keyframes fadeInUpContent {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .mind-map {
+        transition: margin-top 0.4s ease;
+        margin: 50px 0;
+      }
+
+      .mind-map.animacion-contenido {
+        animation: fadeInUpContent 0.4s ease-out 1 forwards;
+        animation-delay: 0.2s;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        background-color: var(--fondo-oscuro-claro);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-oscuro-medio);
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(var(--sombra-rgb), 0.25);
+        transition: border-color 0.3s ease;
+      }
+
+      .section-header {
+        padding: 20px;
+        background-color: var(--fondo-oscuro-medio);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .section-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 15px;
+      }
+
+      .toggle-icon {
+        font-size: 1.2rem;
+        color: var(--texto-claro-2);
+        will-change: transform;
+        transition: transform 0.3s ease;
+      }
+
+      .section.active > .section-header .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .section-content {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .section.active .section-content {
+        max-height: fit-content;
+        padding-bottom: 10px;
+        opacity: 1;
+      }
+
+      .subsection {
+        margin: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-borde-claro);
+        overflow: hidden;
+        transition: border-color 0.3s ease;
+      }
+
+      .subsection:hover {
+        border-color: var(--fondo-sombra-azul-header);
+      }
+
+      .subsection:hover .subsection-header {
+        background-color: var(--fondo-sombra-azul-header);
+      }
+
+      .section:hover {
+        border-color: var(--fondo-borde-claro);
+      }
+
+      .section:hover .section-header {
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .subsection-header {
+        padding: 15px;
+        background-color: var(--fondo-borde-claro);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .subsection-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .subsection-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 4px 10px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 12px;
+      }
+
+      .subsection-content {
+        max-height: 0;
+        overflow: hidden;
+        background-color: var(--fondo-oscuro-claro);
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .subsection.active .subsection-content {
+        max-height: fit-content;
+        padding: 15px;
+        opacity: 1;
+      }
+
+      .subsection.active .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .content-item {
+        margin-bottom: 10px;
+        padding: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border-left: 4px solid var(--color-principal);
+        box-shadow: 0 1px 5px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .content-text {
+        color: var(--texto-medio-3);
+        margin-bottom: 5px;
+        line-height: 1.4;
+        font-size: 1rem;
+        font-weight: 500;
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .content-text::before {
+        content: "•";
+        color: var(--color-principal);
+        font-weight: 700;
+        display: inline-block;
+        position: absolute;
+        left: 0px;
+      }
+
+      .youtube-link {
+        display: inline-block;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, var(--rojo-youtube-claro) 0%, var(--rojo-youtube-fuerte) 100%);
+        color: var(--texto-blanco-1);
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 1rem;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        box-shadow: 0 2px 5px rgba(var(--rojo-rgb), 0.4);
+        will-change: transform;
+      }
+
+      .youtube-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 7.5px rgba(var(--rojo-rgb), 0.5);
+        will-change: transform;
+      }
+
+      .timestamp {
+        color: var(--timestamp-youtube);
+        font-size: 0.85rem;
+        margin-left: 10px;
+        font-weight: 400;
+      }
+
+      .highlight {
+        background-color: var(--fondo-resaltado);
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+        padding: 4px;
+        border-radius: 6px;
+      }
+
+      .footer {
+        padding: 30px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        border-top: 1px solid var(--fondo-oscuro-medio);
+        text-align: center;
+        box-shadow: 0 -2px 10px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .footer-text {
+        color: var(--texto-claro-2);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .footer-logo {
+        width: 140px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .header-top {
+          flex-direction: column;
+        }
+
+        .logo {
+          margin: 0;
+        }
+
+        .header-text-box {
+          margin: 0;
+        }
+
+        .header h1 {
+          font-size: 1.5rem;
+        }
+
+        .header p {
+          font-size: 1rem;
+        }
+
+        .header.compact .header-bottom-row .logo-and-title {
+          gap: 5px;
+        }
+        .logo,
+        .footer-logo {
+          width: 105px;
+        }
+
+        .header.compact .header-bottom-row {
+          flex-direction: column;
+        }
+
+        .header.compact .header-compact-title {
+          margin: 0 5px;
+          font-size: 0.8rem;
+        }
+
+        .header.compact .logo.compact-logo {
+          width: 65px;
+          margin: 5px;
+        }
+
+        .action-button,
+        .search-bar input,
+        .clear-search {
+          font-size: 0.9rem;
+        }
+
+        .section-header {
+          padding: 15px;
+        }
+
+        .header.compact .controls {
+          flex-direction: row;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+        }
+
+        .subsection-title {
+          font-size: 1rem;
+        }
+        .section-number,
+        .subsection-number {
+          font-size: 13px;
+        }
+
+        .content-text {
+          font-size: 0.9rem;
+        }
+
+        .youtube-link {
+          font-size: 0.8rem;
+        }
+
+        .timestamp {
+          font-size: 0.75rem;
+        }
+
+        .header.compact .action-button {
+          padding: 6px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header animacion-inicial">
+      <div class="header-content-box">
+        <div class="header-top">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo" />
+          </a>
+          <div class="header-text-box">
+            <h1>
+              <div>DIPLOMADO DE ALTA ESPECIALIZACIÓN EN</div>
+              <strong id="tituloDiplomado" style="display: block"></strong>
+            </h1>
+            <p id="tituloPrincipal"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-bottom-row">
+        <div class="logo-and-title">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo compact-logo" />
+          </a>
+          <span class="header-compact-title" id="tituloCompacto"></span>
+        </div>
+        <div class="header-second-row">
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar en el resumen interactivo…" autocomplete="off" />
+            <div class="search-actions">
+              <span class="clear-search" onclick="clearSearch()">&times;</span>
+              <button class="action-button" onclick="searchContent()">Buscar</button>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="action-button" onclick="expandAll()">Mostrar todo</button>
+            <button class="action-button" onclick="collapseAll()">Colapsar todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-spacer"></div>
+
+    <div class="container">
+      <div class="mind-map animacion-contenido" id="mindMap">
+        <div class="section" data-section="1">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">1</span>
+              <span class="section-title">Principios y filosofía de la responsabilidad social</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">1.1</span>
+                  <span class="subsection-title">Presentación y objetivos de la sesión</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Inicio de la clase 19 del diplomado y presentación del moderador y profesor: Indicaciones sobre consultas por chat, micrófonos y formulario de asistencia en el break.</div>
+                  <div class="content-text">Tema central: financiamiento para el desarrollo y agenda social de una empresa minera: Mención de ejemplos extraídos de informes de sostenibilidad y de prácticas como obras por impuestos.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=304" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:05:04)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">1.2</span>
+                  <span class="subsection-title">Enfoque y principios básicos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Responsabilidad social como inversión a largo plazo, no gasto: Transversalidad con sostenibilidad y necesidad de interiorizar la filosofía empresarial.</div>
+                  <div class="content-text">Trabajo "con la comunidad" y co-participación para ganar confianza: Importancia de que la comunidad participe en la dirección y ejecución del proyecto.</div>
+                  <div class="content-text">Filosofía de empoderamiento económico versus filantropía: Buscar desarrollo autónomo de la comunidad que no dependa permanentemente de la minera.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=372" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:06:12)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="2">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">2</span>
+              <span class="section-title">Metodología y herramientas de supervisión en campo</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.1</span>
+                  <span class="subsection-title">Fundamentos del monitoreo y evaluación</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Monitoreo = supervisión, evaluación, auditoría; propósito generar confianza: Herramientas simples como diagramas de Gantt simplificados para comunicar hitos.</div>
+                  <div class="content-text">Participación comunitaria en el monitoreo y evaluación: Diagnóstico participativo y establecimiento de línea de base con indicadores cualitativos y cuantitativos.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=623" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:10:23)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.2</span>
+                  <span class="subsection-title">Herramientas prácticas y técnicas</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Trabajo de campo, metrado y visitas conjuntas mina-comunidad con checklist: Fotografías secuenciales para documentar avance y paneles visuales.</div>
+                  <div class="content-text">Uso de aplicaciones offline y mapas participativos con GPS: Capacitación básica a comuneros en uso de GPS y generación de mapas que identifiquen sitios a proteger.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=903" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:15:03)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.3</span>
+                  <span class="subsection-title">Indicadores duros y blandos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Indicadores duros: porcentaje de avance físico vs programado, inversión ejecutada vs presupuestada: Número de familias beneficiadas, horas de capacitación, personal calificado.</div>
+                  <div class="content-text">Indicadores blandos: confianza, grado de apropiación comunitaria, satisfacción: Encuestas gráficas, testimonios y apreciaciones cualitativas.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=1117" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:18:37)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">2.4</span>
+                  <span class="subsection-title">Evaluación de resultados e impacto</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Comparación línea de base vs situación final para proyectos de salud o educación: Ejemplo: variación de hemoglobina en menores como indicador cuantitativo.</div>
+                  <div class="content-text">Evaluación de impacto a 6 meses-1 año en efectos económicos y multidimensionales: Considerar factores externos (luz, violencia doméstica) que afectan resultados educativos.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=1266" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:21:06)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="3">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">3</span>
+              <span class="section-title">Límites de responsabilidad y sostenibilidad del proyecto</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.1</span>
+                  <span class="subsection-title">Operación, mantenimiento y rol del Estado</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Diferenciar responsabilidades: operación y mantenimiento de obras educativas y servicios corresponde al Estado: Explicar claramente a la comunidad límites del compromiso minero y plazos de apoyo temporal si aplica.</div>
+                  <div class="content-text">Riesgo de comprometer demasiado a la comunidad en gastos permanentes: Evitar expectativas que luego generen desánimo si el Estado no asume funciones.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=1392" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:23:12)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.2</span>
+                  <span class="subsection-title">Análisis de sostenibilidad y continuidad</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Incluir línea de base, encuesta de satisfacción y análisis de sostenibilidad al finalizar: Aclarar responsabilidades de mantenimiento y operación para evitar incumplimientos posteriores.</div>
+                  <div class="content-text">Ajustes según cambio de contexto: nuevo dueño de la mina, variación en políticas o prioridades: Sistema de monitoreo y evaluación adaptable anualmente con retroalimentación comunitaria.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=1396" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:23:16)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.3</span>
+                  <span class="subsection-title">Comités, auditoría social y roles</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Asamblea comunal elige comité de vigilancia y recibe capacitación en supervisión básica: Facultar al comité para paralizar obras por incumplimiento del cronograma.</div>
+                  <div class="content-text">Auditoría social de la minera y sus contratistas como mecanismo de control: Capacitación básica para interpretar Gantt y estados financieros.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=1570" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:26:10)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">3.4</span>
+                  <span class="subsection-title">Metodologías de auditoría y selección de vigilantes</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Metodologías lúdicas y visuales: infografías, maquetas, collages y 3D parciales: Definición de criterios y soporte técnico por la compañía minera sin usurpar decisiones comunitarias.</div>
+                  <div class="content-text">Selección de perfiles afines a tareas: números, letras, trabajo práctico: Aprovechar inteligencias múltiples para asignar roles de vigilancia adecuados.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=1665" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:27:45)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="4">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">4</span>
+              <span class="section-title">Fortalecimiento de capacidades y transparencia técnica</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.1</span>
+                  <span class="subsection-title">Objetivos y beneficios del empoderamiento</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Fortalecer capacidades y organización para que peticiones sean más racionales: Ciudadanos empoderados planifican mejor y logran mayores probabilidades de éxito.</div>
+                  <div class="content-text">Empoderamiento beneficia también a la empresa al generar actores racionales y confiables: Retorno de inversión en capacitación mediante mejores solicitudes y ejecución.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=2807" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:46:47)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.2</span>
+                  <span class="subsection-title">Estrategia de formación y criterios</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Ganar confianza antes de ofrecer capacitación: conocer calendario agrícola, festividades y actores: Mapear actores formales e informales y escuchar vocaciones y expectativas.</div>
+                  <div class="content-text">Formar técnicos de la mina y comuneros en supervisión y auditoría: Capacitación práctica en lectura de planos, verificación de materiales y revisión de valores razonables.</div>
+                  <div class="content-text">Escuelas de líderes y de negociación para formar liderazgos intergeneracionales: Incluir jóvenes para asegurar relevo y continuidad en liderazgo comunitario.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=3081" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:51:21)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.3</span>
+                  <span class="subsection-title">Transparencia y manejo de información técnica</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Mostrar partes relevantes del EIA, especialmente las medidas de manejo ambiental: Admitir posibilidad de impactos y explicar normas y tratamientos para minimizar daño.</div>
+                  <div class="content-text">No ocultar errores: documentar aciertos y fallos, aprender y compartir con otras operaciones: Celebrar errores intermedios como oportunidades de aprendizaje.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=3256" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:54:16)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">4.4</span>
+                  <span class="subsection-title">Acuerdos de convivencia y resolución de conflictos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Establecer reglas, canales de comunicación y mecanismos pactados de resolución de conflictos: Reconocer que los conflictos son inherentes a la interacción social y prever mecanismos éticos.</div>
+                  <div class="content-text">Fortalecimiento institucional mediante diagnóstico participativo de capacidades y líderes: Identificar brechas generacionales y de género para diseñar intervenciones inclusivas.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=3480" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(00:58:00)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="5">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">5</span>
+              <span class="section-title">Financiamiento, gestión municipal y obras por impuestos</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.1</span>
+                  <span class="subsection-title">Gestión financiera municipal y fondos disponibles</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Comuneros deben conocer presupuesto municipal: gasto corriente vs inversión: Diferenciar costo del expediente y costo de la obra; entender que el municipio puede preferir obras por el perfil político del alcalde.</div>
+                  <div class="content-text">Fondos y mecanismos: canon, regalías, fondos concursables (FIDED), obras por impuestos y fondos rotatorios: Comprender capacidad de endeudamiento municipal para planificar financiamiento viable.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=3602" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:00:02)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">5.2</span>
+                  <span class="subsection-title">Obras por impuestos y mecanismos de cofinanciación</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Obras por impuestos permiten a la empresa ejecutar obras que se imputan a sus tributos: Requiere proceso burocrático y coordinación con municipio; es un mecanismo replicado con éxito por empresas como Antamina.</div>
+                  <div class="content-text">Importancia de una cartera amplia de proyectos y distintas fuentes de financiamiento: Combinar canon, regalías, obras por impuestos y fondos concursables para diversificar opciones.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=3830" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:03:50)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="6">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">6</span>
+              <span class="section-title">Empoderamiento económico y desarrollo de proveedores locales</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.1</span>
+                  <span class="subsection-title">Proveedores locales, emprendimiento y empresas comunales</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Fomentar proveedores locales para bienes y servicios (transporte, perforación, venta de maderas): Reconocer que la viabilidad está supeditada a la vida útil de la mina y diversificar oportunidades hacia otros mercados.</div>
+                  <div class="content-text">Apoyar emprendimientos asociativos y empresas comunales con administración comunal: Ejemplos: empresas comunales que comercializan madera, agricultura, ganadería y servicios para la minería.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=4690" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:18:10)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.2</span>
+                  <span class="subsection-title">Agroindustria, turismo y energía como palancas de sostenibilidad</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Agroindustria (quesos, yogur, secado de maíz) para agregar valor y reducir dependencia de comprador único: Capacitación técnica (agrónomo, ingeniero), asistencia en procesos sanitarios y registro de marca (Indecopy).</div>
+                  <div class="content-text">Turismo vivencial y necesidades logísticas: alojamiento, internet y servicios básicos: Escuelas de turismo y formación en atención al visitante; alinear inversión RSE con planes de desarrollo local.</div>
+                  <div class="content-text">Energía autónoma (paneles solares) como habilitador clave: Energía permite refrigeración, procesamiento, internet y mayores oportunidades productivas; soluciones descentralizadas son más viables que tendidos caros.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=4855" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:20:55)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">6.3</span>
+                  <span class="subsection-title">Instrumentos de apoyo económico y capacitación</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Fondos rotatorios y capital semilla para proyectos productivos y empresas comunales: Administración comunal del capital y selección basada en capacitación previa.</div>
+                  <div class="content-text">Escuelas de emprendedores, mentoría, planes de negocio y ferias intercomunales: Vinculación con mercados reales y clientes potenciales fuera de la minería para asegurar sostenibilidad cuando la mina termine.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=5418" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:30:18)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="7">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">7</span>
+              <span class="section-title">Evaluación de resultados y lecciones aprendidas</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.1</span>
+                  <span class="subsection-title">Indicadores de desarrollo y monitoreo autónomo</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Elaborar indicadores de desarrollo comunitario que permitan monitoreo autónomo por líderes locales: Reportes de gestión y mecanismos para identificar quién necesita apoyo adicional.</div>
+                  <div class="content-text">Sistematización y documentación de experiencias como referente para replicar buenas prácticas: Casos como Antamina muestran cómo documentar procesos para construir prestigio y aprendizaje institucional.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=5841" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:37:21)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.2</span>
+                  <span class="subsection-title">Riesgos, expectativas y lecciones sobre sostenibilidad</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Reconocer tasa de éxitos y fracasos en emprendimientos; educar sobre selección natural y riesgos empresariales: Transparencia sobre probabilidades de éxito evita falsas expectativas y reduce conflictos post-intervención.</div>
+                  <div class="content-text">Evaluar grado de autonomía comunitaria y celebrar tropiezos como aprendizaje: Definir hasta qué punto la comunidad necesitará apoyo continuo o podrá autogestionarse.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=6025" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:40:25)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.3</span>
+                  <span class="subsection-title">Ejemplos de empresas comunales exitosas</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Volcan: empresa comunal que presta servicios ambientales y de transporte, generando proveedores locales: Resultado: paz social y contratos que benefician a ambas partes pagando precio de mercado.</div>
+                  <div class="content-text">Consorcio Minero Horizonte / NUACU (Parcoy): empresa comunal con actividades en madera, agricultura y transporte: Resultado: facturación significativa (ejemplo 22 millones en 2015) y mayor sostenibilidad por diversificación.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=6252" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:44:12)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">7.4</span>
+                  <span class="subsection-title">Lecciones finales y recomendaciones</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Promover equipos estables de relacionistas comunitarios y documentar experiencias: Evaluar autonomía comunitaria y diseñar estrategias de salida gradual para la minera.</div>
+                  <div class="content-text">Balance realista entre apoyo y expectativas: capacitar en gestión, marketing, propiedad intelectual, y promover energía y agroindustria como palancas de sostenibilidad: Celebrar aprendizajes, gestionar fracasos con transparencia y negociar siempre con sinceridad entre gerencia y autoridades comunales.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=6483" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:48:03)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="8">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">8</span>
+              <span class="section-title">Teoría y tipología de la conflictividad social</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.1</span>
+                  <span class="subsection-title">Definiciones y actores del conflicto</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Definición PCM: contraposición de intereses entre dos o más partes con actores identificables: Actores principales: empresas mineras, comunidades campesinas y Estado como actor terciario e interesado en la recaudación.</div>
+                  <div class="content-text">Defensoría del Pueblo: proceso donde Estado, empresa y comunidad tienen intereses contradictorios que pueden derivar en violencia: Comprender que el Estado pierde ingresos cuando la minería se paraliza (canon proporcional a la producción).</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=6736" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:52:16)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.2</span>
+                  <span class="subsection-title">Tipos de conflictos y elementos determinantes</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Tipologías: socioambientales, socioeconómicos, conflictos por tierras, de niveles de gobierno y comunales: Socioambientales: cambios en el ambiente y modo de vida de la comunidad. Socioeconómicos: demanda de participación en beneficios y acceso a empleos o contratos.</div>
+                  <div class="content-text">Elementos según Mercado y González: poder, necesidad, valores, intereses y comunicación: Detectar y actuar tempranamente en conflictos latentes puede prevenir escalamiento; rol activo del relacionista comunitario en anticipación.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=7079" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:57:59)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.3</span>
+                  <span class="subsection-title">Funciones del relacionista comunitario y estrategias de intervención</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Detectar conflictos en fase potencial o temprana y diseñar intervenciones preventivas: Empoderar a comuneros en gestión, negociación y comunicación para reducir riesgos de paralizaciones.</div>
+                  <div class="content-text">Facilitar consenso interno antes de presentar propuestas formales a municipio o prensa: Promover creación de comités especializados (mujeres, jóvenes) y sistemas de rendición de cuentas internos.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=6747" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:52:27)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">8.4</span>
+                  <span class="subsection-title">Impacto de la paralización y necesidad de estrategias integradas</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Paralizaciones mineras generan pérdidas económicas para empresa, gobierno regional y municipios: Diseño de medidas que combinan responsabilidad social, manejo técnico y governance para minimizar riesgos.</div>
+                  <div class="content-text">Las empresas comunales pueden actuar como válvulas de alivio socioeconómico: Generar empleo e ingresos reduce presión política y reclamos extremos, contribuyendo a la paz social.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=6782" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(01:53:02)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" data-section="9">
+          <div class="section-header" onclick="toggleSection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="section-number">9</span>
+              <span class="section-title">Cultura, cosmovisión y poder como factores del conflicto</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="section-content">
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">9.1</span>
+                  <span class="subsection-title">Cosmovisión y percepción de la minería</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">La cosmovisión andina u otras visiones culturales influyen en cómo se percibe la minería: Algunos ven la mina solo como fuente de dinero; otros la interpretan en términos culturales que afectan confianza y expectativas.</div>
+                  <div class="content-text">Entender estas percepciones es clave para diseñar intervenciones respetuosas y reconciliadoras: Adaptar lenguaje, tiempos y propuestas al marco cultural para evitar malentendidos.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=7204" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:00:04)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">9.2</span>
+                  <span class="subsection-title">Dinámicas de poder y perfiles de actores</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">El poder es motivación central para ciertos actores que buscan influencia más allá de beneficios económicos: Perfil político: aspirantes a alcaldía, regidores o líderes que buscan control institucional y visibilidad.</div>
+                  <div class="content-text">Distintos tipos de demandas según motivación: obras colectivas de bienestar vs proyectos que generan ganancias para un grupo: Identificar si las peticiones buscan impacto comunitario amplio (canales de regadío) o beneficios concentrados (proyectos rentables para un grupo).</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=7229" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:00:29)</span> </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="subsection">
+              <div class="subsection-header" onclick="toggleSubsection(this)">
+                <div style="display: flex; align-items: center">
+                  <span class="subsection-number">9.3</span>
+                  <span class="subsection-title">Conclusión de la sesión y próximos pasos</span>
+                </div>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="subsection-content">
+                <div class="content-item">
+                  <div class="content-text">Resumen final y cierre por el profesor, recordatorio de consultas y disponibilidad para dudas: Anuncio de envío de la grabación por WhatsApp y confirmación de la próxima clase el jueves a la misma hora.</div>
+                  <div class="content-text">Agradecimientos y despedida colectiva: Instrucciones de contacto para consultas posteriores y despedida formal de la sesión.</div>
+                  <a href="https://www.youtube.com/watch?v=O6Bgx8TMK-g&start=7307" class="youtube-link" target="_blank"> Ver en YouTube <span class="timestamp">(02:01:47)</span> </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="https://www.edumin.pe/" target="_blank">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="footer-logo" />
+      </a>
+      <p class="footer-text">
+        <span style="display: block; font-weight: bold">Contenido desarrollado por EDUMIN - Centro de Capacitación Especializado en Minería, Industria y Negocios</span>
+        <span style="display: block; font-style: italic">Material exclusivo para estudiantes de EDUMIN</span>
+        <a href="https://www.edumin.pe/" target="_blank" style="color: var(--color-principal); text-decoration: none; display: block">https://www.edumin.pe/</a>
+      </p>
+    </div>
+
+    <script>
+      const TITULO_DIPLOMADO = "Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera".toUpperCase();
+      const TITULO_CLASE = "CLASE 19: NEGOCIACIÓN, GESTIÓN SOCIAL Y RESOLUCIÓN DE CONFLICTOS EN ENTORNOS MINEROS - 1RA PARTE".toUpperCase();
+
+      const elementoDiplomado = document.getElementById("tituloDiplomado");
+      if (elementoDiplomado) {
+        elementoDiplomado.innerText = TITULO_DIPLOMADO;
+      }
+
+      document.title = TITULO_CLASE;
+      const tituloPrincipal = document.getElementById("tituloPrincipal");
+      if (tituloPrincipal) {
+        tituloPrincipal.innerText = TITULO_CLASE;
+      }
+
+      const tituloCompacto = document.getElementById("tituloCompacto");
+      if (tituloCompacto) {
+        tituloCompacto.innerText = TITULO_CLASE;
+      }
+
+      function toggleSection(element) {
+        const section = element.closest(".section");
+        const wasActive = section.classList.contains("active");
+
+        section.classList.toggle("active");
+
+        if (wasActive) {
+          const subsections = section.querySelectorAll(".subsection");
+          subsections.forEach((subsection) => {
+            subsection.classList.remove("active");
+          });
+        }
+      }
+
+      function toggleSubsection(element) {
+        const subsection = element.closest(".subsection");
+        subsection.classList.toggle("active");
+      }
+
+      function expandAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.add("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.add("active");
+        });
+      }
+
+      function collapseAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.remove("active");
+        });
+      }
+
+      function debounce(func, delay) {
+        let timeout;
+        return function (...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func.apply(this, args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, delay);
+        };
+      }
+
+      function clearSearch() {
+        const searchInput = document.getElementById("searchInput");
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        searchInput.value = "";
+        clearBtn.style.display = "none";
+        searchContent();
+        searchInput.focus();
+      }
+
+      const createDiacriticInsensitiveRegex = (term) => {
+        const charMap = {
+          a: "[aáAÁ]",
+          e: "[eéEÉ]",
+          i: "[iíIÍ]",
+          o: "[oóOÓ]",
+          u: "[uúUÚ]",
+        };
+
+        const regexString = term
+          .split("")
+          .map((char) => {
+            const lowerChar = char.toLowerCase();
+            return charMap[lowerChar] || char;
+          })
+          .join("");
+
+        return new RegExp(`(${regexString})`, "gi");
+      };
+
+      function searchContent() {
+        const inputElement = document.getElementById("searchInput");
+        const searchTerm = inputElement.value.trim();
+
+        const searchableElements = document.querySelectorAll(".content-text, .section-title, .subsection-title");
+        let found = false;
+        let firstMatchElement = null;
+
+        document.querySelectorAll(".section.active").forEach((el) => el.classList.remove("active"));
+        document.querySelectorAll(".subsection.active").forEach((el) => el.classList.remove("active"));
+        searchableElements.forEach((element) => {
+          element.innerHTML = element.getAttribute("data-original-text") || element.textContent;
+        });
+
+        if (searchTerm.length < 3) {
+          return;
+        }
+
+        const searchRegex = createDiacriticInsensitiveRegex(searchTerm);
+
+        searchableElements.forEach((element) => {
+          const originalText = element.getAttribute("data-original-text") || element.textContent;
+
+          if (searchRegex.test(originalText)) {
+            found = true;
+
+            element.innerHTML = originalText.replace(searchRegex, `<span class="highlight">$1</span>`);
+
+            const subsection = element.closest(".subsection");
+            if (subsection) {
+              subsection.classList.add("active");
+              subsection.closest(".section")?.classList.add("active");
+            } else if (element.classList.contains("section-title")) {
+              element.closest(".section")?.classList.add("active");
+            }
+
+            if (!firstMatchElement) {
+              firstMatchElement = element;
+            }
+          }
+        });
+
+        if (firstMatchElement) {
+          requestAnimationFrame(() => {
+            firstMatchElement.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          });
+        } else if (searchTerm.length >= 3) {
+          alert("No se encontraron resultados para: " + searchTerm);
+        }
+      }
+
+      const debouncedSearch = debounce(searchContent, 300);
+
+      document.getElementById("searchInput").addEventListener("input", function () {
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        clearBtn.style.display = this.value.length > 0 ? "block" : "none";
+        debouncedSearch();
+      });
+
+      document.getElementById("searchInput").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          clearTimeout(this._timeoutId);
+          searchContent();
+        }
+      });
+
+      // --- Lógica del Header Compacto ---
+      const header = document.querySelector(".header");
+      const headerSpacer = document.querySelector(".header-spacer");
+      let initialHeaderHeight = 0; // Altura del header original
+      let compactHeaderHeight = 0; // Altura del header en modo compacto
+      let scrollTriggerPoint = 0; // Punto de scroll para activar el cambio
+
+      function handleHeaderState() {
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        if (scrollY > scrollTriggerPoint) {
+          if (!header.classList.contains("compact")) {
+            header.classList.add("compact");
+            headerSpacer.style.height = `${initialHeaderHeight}px`;
+          }
+        } else {
+          if (header.classList.contains("compact")) {
+            header.classList.remove("compact");
+            headerSpacer.style.height = "0px";
+          }
+        }
+      }
+
+      function initializeHeader() {
+        initialHeaderHeight = header.offsetHeight;
+        const headerClone = header.cloneNode(true);
+        headerClone.classList.add("compact");
+        headerClone.style.visibility = "hidden";
+        headerClone.style.position = "absolute";
+        document.body.appendChild(headerClone);
+        compactHeaderHeight = headerClone.offsetHeight;
+        document.body.removeChild(headerClone);
+
+        scrollTriggerPoint = initialHeaderHeight - compactHeaderHeight;
+      }
+
+      document.addEventListener("DOMContentLoaded", initializeHeader);
+      window.addEventListener("scroll", handleHeaderState);
+      window.addEventListener("resize", debounce(initializeHeader, 200));
+    </script>
+  </body>
+</html>

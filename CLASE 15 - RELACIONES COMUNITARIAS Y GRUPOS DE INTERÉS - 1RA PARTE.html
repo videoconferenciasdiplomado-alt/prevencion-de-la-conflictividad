@@ -1,0 +1,1567 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <style>
+      /* Estilos de balanceo de texto */
+      .header-content-box,
+      .header-compact-title,
+      .footer,
+      .section-title,
+      .subsection-title {
+        text-wrap: balance;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      :root {
+        /* Colores Principales del Diseño (Acentos y Degradados) */
+        /* ======================================================= */
+        --color-principal: #00beff; /* Cian Brillante para acentos, bordes y el inicio del degradado principal */
+        --color-secundario: #1e50cd; /* Azul Medio, parte final del degradado de acento */
+
+        /* Fondos Oscuros de la Interfaz */
+        /* ======================================================= */
+        --fondo-oscuro-claro: #002a52; /* Fondo de secciones y contenido */
+        --fondo-oscuro-fuerte: #001a33; /* Fondo del encabezado (header) y pie de página (footer) */
+        /* ======================================================= */
+        --fondo-oscuro-medio: #003366; /* Fondo de encabezados y cajas de contenido */
+        --fondo-borde-claro: #004080; /* Bordes ligeros y color de fondo al hacer hover en encabezados */
+        --fondo-sombra-azul-header: #0050a0; /* ¡NUEVO! Sombra en el header */
+
+        /* Colores de Texto y Fondo General del Body */
+        /* ======================================================= */
+        --texto-blanco-1: #ffffff; /* Blanco puro para títulos y texto en fondo muy oscuro */
+        --texto-claro-2: #e6e6e6; /* Texto principal y claro */
+        --texto-medio-3: #cccccc; /* Texto de contenido de item (un poco más tenue) */
+
+        /* ======================================================= */
+        --fondo-body-inicio: #99e5ff; /* Color de inicio del degradado de fondo del body */
+        --fondo-body-fin: #a5b9eb; /* Color de final del degradado de fondo del body */
+
+        /* Colores de Acento Específicos (YouTube, Búsqueda) */
+        /* ======================================================= */
+        --rojo-youtube-claro: #e60000;
+        --rojo-youtube-fuerte: #a30000;
+        --timestamp-youtube: #ffcccc;
+        --fondo-resaltado: #00c339; /* Verde para el fondo del texto buscado */
+
+        /* Bases RGB para Transparencias (RGBA) */
+        /* ======================================================= */
+        --sombra-rgb: 0, 0, 0; /* Negro puro: Usado para sombras generales y profundidad */
+        --acento-rgb: 0, 190, 255; /* Cian Brillante: Usado para brillos y sombras de acento */
+        --rojo-rgb: 230, 0, 0; /* Rojo Puro: Usado para sombras de enlaces de YouTube */
+        /* ======================================================= */
+        --gradient-principal: linear-gradient(135deg, var(--color-principal) 0%, var(--color-secundario) 100%);
+      }
+
+      body {
+        background: linear-gradient(135deg, var(--fondo-body-inicio) 0%, var(--fondo-body-fin) 100%);
+        line-height: 1.2;
+        scroll-behavior: smooth;
+      }
+
+      strong#tituloDiplomado {
+        font-weight: 900;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      @keyframes slideDownSutil {
+        0% {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header.animacion-inicial {
+        animation: slideDownSutil 0.4s ease-out 1;
+        animation-fill-mode: forwards;
+        will-change: transform, opacity;
+      }
+
+      .header {
+        position: relative;
+        width: 100%;
+        z-index: 1000;
+        padding: 20px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        box-shadow: 0 5px 15px rgba(var(--sombra-rgb), 0.5);
+        text-align: center;
+        will-change: transform;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header-text-box {
+        display: grid;
+        gap: 10px;
+        word-break: break-word;
+        margin: 0 15px;
+      }
+
+      .header.compact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: fixed;
+      }
+
+      .header-spacer {
+        display: none;
+        transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .header.compact + .header-spacer {
+        display: block;
+      }
+
+      .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .header.compact .header-top {
+        display: none;
+      }
+
+      .logo {
+        width: 140px;
+        height: auto;
+        margin: 0 15px;
+        transition: all 0.3s ease;
+        vertical-align: middle;
+      }
+
+      .header.compact .logo {
+        width: 90px;
+        margin: 0 10px;
+      }
+
+      .header .logo.compact-logo {
+        display: none;
+      }
+
+      .header.compact .logo.compact-logo {
+        display: block;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 900;
+      }
+
+      .header.compact h1 {
+        font-size: 1rem;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+      }
+
+      .header-content-box {
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 20px 20px;
+        box-shadow: 0 8px 20px rgba(var(--acento-rgb), 0.6);
+        overflow: hidden;
+        margin-bottom: 15px;
+
+        opacity: 1;
+        transform: translateY(0);
+        will-change: transform;
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .header-content-box {
+        opacity: 0;
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        border: 0;
+        transform: translateY(-10px);
+      }
+
+      .header-content-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(var(--acento-rgb), 0.8);
+      }
+
+      .header-bottom-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header-second-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .header.compact .header-bottom-row {
+        flex-grow: 1;
+      }
+
+      .logo-and-title {
+        opacity: 0;
+        overflow: hidden;
+        transform: translateY(-10px);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .header.compact .logo-and-title {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .header.compact .header-bottom-row .logo-and-title {
+        will-change: transform;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+        width: 100%;
+        background: var(--gradient-principal);
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        gap: 10px;
+      }
+
+      .header.compact .header-bottom-row .logo-and-title:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .header-compact-title {
+        display: none;
+        color: var(--texto-blanco-1);
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 10px;
+        white-space: normal;
+      }
+
+      .header.compact .header-compact-title {
+        display: block;
+      }
+
+      .search-bar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 450px;
+        background-color: var(--fondo-oscuro-medio);
+        border: 2px solid var(--fondo-borde-claro);
+        border-radius: 30px;
+        box-shadow: 0 4px 10px rgba(var(--sombra-rgb), 0.25);
+        will-change: border-color, background-color;
+        transition:
+          border-color 0.3s ease,
+          box-shadow 0.3s ease,
+          background-color 0.3s ease;
+      }
+
+      .search-bar:focus-within {
+        border-color: var(--fondo-sombra-azul-header);
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .clear-search {
+        cursor: pointer;
+        color: var(--texto-claro-2);
+        padding: 5px;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        display: none;
+        transition: color 0.2s ease;
+        transform: scale(1.5);
+      }
+
+      .clear-search:hover {
+        color: var(--texto-blanco-1);
+      }
+
+      .search-bar input {
+        flex-grow: 1;
+        padding: 10px 18px;
+        font-weight: 400;
+        font-size: 1rem;
+        color: var(--texto-claro-2);
+        background-color: transparent;
+        border: none;
+        outline: none;
+        min-width: 0px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .header.compact .search-bar input {
+        padding: 10px 20px;
+      }
+
+      .search-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .action-button {
+        background: var(--gradient-principal);
+        border: none;
+        color: var(--texto-blanco-1);
+        padding: 8px 18px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        will-change: transform;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(var(--acento-rgb), 0.4);
+        max-width: 150px;
+        white-space: normal;
+      }
+
+      .action-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(var(--acento-rgb), 0.5);
+      }
+
+      .search-bar .action-button {
+        margin: 5px;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      @keyframes fadeInUpContent {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .mind-map {
+        transition: margin-top 0.4s ease;
+        margin: 50px 0;
+      }
+
+      .mind-map.animacion-contenido {
+        animation: fadeInUpContent 0.4s ease-out 1 forwards;
+        animation-delay: 0.2s;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        background-color: var(--fondo-oscuro-claro);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-oscuro-medio);
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(var(--sombra-rgb), 0.25);
+        transition: border-color 0.3s ease;
+      }
+
+      .section-header {
+        padding: 20px;
+        background-color: var(--fondo-oscuro-medio);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .section-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 5px 12px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 15px;
+      }
+
+      .toggle-icon {
+        font-size: 1.2rem;
+        color: var(--texto-claro-2);
+        will-change: transform;
+        transition: transform 0.3s ease;
+      }
+
+      .section.active > .section-header .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .section-content {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .section.active .section-content {
+        max-height: fit-content;
+        padding-bottom: 10px;
+        opacity: 1;
+      }
+
+      .subsection {
+        margin: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border: 2px solid var(--fondo-borde-claro);
+        overflow: hidden;
+        transition: border-color 0.3s ease;
+      }
+
+      .subsection:hover {
+        border-color: var(--fondo-sombra-azul-header);
+      }
+
+      .subsection:hover .subsection-header {
+        background-color: var(--fondo-sombra-azul-header);
+      }
+
+      .section:hover {
+        border-color: var(--fondo-borde-claro);
+      }
+
+      .section:hover .section-header {
+        background-color: var(--fondo-borde-claro);
+      }
+
+      .subsection-header {
+        padding: 15px;
+        background-color: var(--fondo-borde-claro);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        will-change: background-color;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      .subsection-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--texto-claro-2);
+        margin-right: 10px;
+      }
+
+      .subsection-number {
+        background: var(--gradient-principal);
+        color: var(--texto-blanco-1);
+        padding: 4px 10px;
+        border-radius: 30px;
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 12px;
+      }
+
+      .subsection-content {
+        max-height: 0;
+        overflow: hidden;
+        background-color: var(--fondo-oscuro-claro);
+        opacity: 0;
+        transition:
+          max-height 0.5s ease-out,
+          opacity 0.3s ease-in;
+      }
+
+      .subsection.active .subsection-content {
+        max-height: fit-content;
+        padding: 15px;
+        opacity: 1;
+      }
+
+      .subsection.active .toggle-icon {
+        transform: rotate(180deg);
+      }
+
+      .content-item {
+        margin-bottom: 10px;
+        padding: 15px;
+        background-color: var(--fondo-oscuro-medio);
+        border-radius: 12px;
+        border-left: 4px solid var(--color-principal);
+        box-shadow: 0 1px 5px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .content-text {
+        color: var(--texto-medio-3);
+        margin-bottom: 5px;
+        line-height: 1.4;
+        font-size: 1rem;
+        font-weight: 500;
+        position: relative;
+        padding-left: 15px;
+      }
+
+      .content-text::before {
+        content: "•";
+        color: var(--color-principal);
+        font-weight: 700;
+        display: inline-block;
+        position: absolute;
+        left: 0px;
+      }
+
+      .youtube-link {
+        display: inline-block;
+        padding: 10px 18px;
+        background: linear-gradient(135deg, var(--rojo-youtube-claro) 0%, var(--rojo-youtube-fuerte) 100%);
+        color: var(--texto-blanco-1);
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        line-height: 1rem;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        box-shadow: 0 2px 5px rgba(var(--rojo-rgb), 0.4);
+        will-change: transform;
+      }
+
+      .youtube-link:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 7.5px rgba(var(--rojo-rgb), 0.5);
+        will-change: transform;
+      }
+
+      .timestamp {
+        color: var(--timestamp-youtube);
+        font-size: 0.85rem;
+        margin-left: 10px;
+        font-weight: 400;
+      }
+
+      .highlight {
+        background-color: var(--fondo-resaltado);
+        color: var(--texto-blanco-1);
+        font-weight: 700;
+        padding: 4px;
+        border-radius: 6px;
+      }
+
+      .footer {
+        padding: 30px;
+        background: linear-gradient(135deg, var(--fondo-oscuro-fuerte) 0%, var(--fondo-oscuro-claro) 100%);
+        border-top: 1px solid var(--fondo-oscuro-medio);
+        text-align: center;
+        box-shadow: 0 -2px 10px rgba(var(--sombra-rgb), 0.25);
+      }
+
+      .footer-text {
+        color: var(--texto-claro-2);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .footer-logo {
+        width: 140px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .header-top {
+          flex-direction: column;
+        }
+
+        .logo {
+          margin: 0;
+        }
+
+        .header-text-box {
+          margin: 0;
+        }
+
+        .header h1 {
+          font-size: 1.5rem;
+        }
+
+        .header p {
+          font-size: 1rem;
+        }
+
+        .header.compact .header-bottom-row .logo-and-title {
+          gap: 5px;
+        }
+        .logo,
+        .footer-logo {
+          width: 105px;
+        }
+
+        .header.compact .header-bottom-row {
+          flex-direction: column;
+        }
+
+        .header.compact .header-compact-title {
+          margin: 0 5px;
+          font-size: 0.8rem;
+        }
+
+        .header.compact .logo.compact-logo {
+          width: 65px;
+          margin: 5px;
+        }
+
+        .action-button,
+        .search-bar input,
+        .clear-search {
+          font-size: 0.9rem;
+        }
+
+        .section-header {
+          padding: 15px;
+        }
+
+        .header.compact .controls {
+          flex-direction: row;
+        }
+
+        .section-title {
+          font-size: 1.1rem;
+        }
+
+        .subsection-title {
+          font-size: 1rem;
+        }
+        .section-number,
+        .subsection-number {
+          font-size: 13px;
+        }
+
+        .content-text {
+          font-size: 0.9rem;
+        }
+
+        .youtube-link {
+          font-size: 0.8rem;
+        }
+
+        .timestamp {
+          font-size: 0.75rem;
+        }
+
+        .header.compact .action-button {
+          padding: 6px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header animacion-inicial">
+      <div class="header-content-box">
+        <div class="header-top">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo" />
+          </a>
+          <div class="header-text-box">
+            <h1>
+              <div>DIPLOMADO DE ALTA ESPECIALIZACIÓN EN</div>
+              <strong id="tituloDiplomado" style="display: block"></strong>
+            </h1>
+            <p id="tituloPrincipal"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-bottom-row">
+        <div class="logo-and-title">
+          <a href="https://www.edumin.pe/" target="_blank">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="logo compact-logo" />
+          </a>
+          <span class="header-compact-title" id="tituloCompacto"></span>
+        </div>
+        <div class="header-second-row">
+          <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar en el resumen interactivo…" autocomplete="off" />
+            <div class="search-actions">
+              <span class="clear-search" onclick="clearSearch()">&times;</span>
+              <button class="action-button" onclick="searchContent()">Buscar</button>
+            </div>
+          </div>
+
+          <div class="controls">
+            <button class="action-button" onclick="expandAll()">Mostrar todo</button>
+            <button class="action-button" onclick="collapseAll()">Colapsar todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-spacer"></div>
+
+<div class="container">
+  <div class="mind-map animacion-contenido" id="mindMap">
+    <div class="section" data-section="1">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">1</span>
+          <span class="section-title">Identificación y clasificación de stakeholders</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">1.1</span>
+              <span class="subsection-title">Bienvenida y objetivo del diplomado</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Presentación del asesor académico y coordinación de dudas por chat: Indicación de pasar formulario de asistencia durante el break.</div>
+              <div class="content-text">Propósito de la sesión: continuar tema de relaciones comunitarias y grupos de interés: Enfoque en herramientas prácticas: matriz de stakeholders, comunicación y alianzas.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=979" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:16:19)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">1.2</span>
+              <span class="subsection-title">Definición y finalidad</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Stakeholders como sujetos sociales y políticos con derechos, valores y percepciones: Tienen poder relativo y capacidades de agenciamiento para influir.</div>
+              <div class="content-text">Objetivo de la clasificación: construir legitimidad social y reducir conflictos: Reconocer líderes evita que busquen demostraciones de fuerza.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=1503" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:25:03)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">1.3</span>
+              <span class="subsection-title">Tipos y ejemplos de stakeholders</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Internos: propietarios, empleados, sindicatos: Empleados usualmente favorables por la relación laboral.</div>
+              <div class="content-text">Externos: clientes, proveedores, inversores, autoridades (OEFA, ANA, MINAM), medios, ONGs: Énfasis en comunidades del área de influencia directa y, excepcionalmente, indirecta.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=1632" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:27:12)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">1.4</span>
+              <span class="subsection-title">Proceso de identificación</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Listado exhaustivo: personas, grupos, organizaciones y autoridades relevantes: Considerar percepciones sobre la minería y la contaminación.</div>
+              <div class="content-text">Clasificación y análisis: poder, influencia y temporalidad: Uso de matrices para intuir quién tiene más poder y relaciones multidimensionales.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=1720" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:28:40)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="2">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">2</span>
+          <span class="section-title">Comunicación, alianzas estratégicas y gestión de expectativas</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">2.1</span>
+              <span class="subsection-title">Comunicación efectiva con stakeholders</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Diferenciar comunicación uno a uno (ideal) y uno a muchos (comunidades adyacentes): Transmitir que la empresa se interesa por toda la población, no solo por líderes.</div>
+              <div class="content-text">Importancia de consensuar expectativas máximas y mínimas con líderes: Recordar limitación presupuestaria y origen de recursos (empresa, Estado).</div>
+              <div class="content-text">Detectar señales no verbales de ruptura en comunicación: Ausencia de respuesta reiterada suele indicar motivo; monitorear cuándo se corta el diálogo.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=1204" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:20:04)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">2.2</span>
+              <span class="subsection-title">Alianzas estratégicas, negociación y proyectos conjuntos</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Alianzas como procesos de negociación orientados a objetivos de responsabilidad social empresarial (RSE): Deben integrarse en un plan con metas concretas y presupuesto definido.</div>
+              <div class="content-text">Complementar la gestión estatal: empresa puede preparar expedientes y ejecutar, Estado aporta financiamiento (obras por impuestos u otros mecanismos): Conocer procedimientos estatales y unidades ejecutoras para agilizar proyectos.</div>
+              <div class="content-text">Ejemplos de confluencia: elaborar expediente técnico para canales de riego y gestionar financiamiento estatal: Alternativa 1: empresa elabora expediente y comunidad integra fondo estatal. Alternativa 2: obras por impuestos para que la empresa ejecute la obra con cargo a sus impuestos.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=1263" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:21:03)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">2.3</span>
+              <span class="subsection-title">Manejo de expectativas, percepciones y cosmovisión</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Expectativas sobre recursos infinitos versus realidad de presupuestos limitados: Riesgo de percepciones erróneas; explicar con claridad alcance y límites.</div>
+              <div class="content-text">Reconocer cosmovisión comunitaria: filtros culturales, religiosos y de acceso a la justicia que influyen en la interpretación del mundo: No se busca cambiar la cosmovisión, sino trabajar sobre ella para consensuar proyectos sostenibles.</div>
+              <div class="content-text">Desarrollo sostenible vs filantropía: Priorizar proyectos sostenibles (servicios, conocimientos, mejores cultivos) frente a dádivas o asistencialismo.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=1485" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:24:45)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="3">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">3</span>
+          <span class="section-title">Mapeo dinámico y validación continua</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">3.1</span>
+              <span class="subsection-title">Naturaleza dinámica del mapeo</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Roles y autoridades cambian con el tiempo: presidentes, tenientes, alcaldes, dirigentes: Las relaciones de poder también pueden cambiar rápidamente; revisar periódicamente.</div>
+              <div class="content-text">Necesidad de actualización continua y retroalimentación conforme a normas ISO: El mapeo no es una lista estática; debe revisarse y validarse en campo.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=1896" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:31:36)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">3.2</span>
+              <span class="subsection-title">Fuentes de información internas y externas</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Internas: informes de sostenibilidad, actas, estudios de impacto ambiental y áreas técnicas (geología, medio ambiente, RR.HH., legal): Geología y medio ambiente conocen terreno; RR.HH. aporta hojas de vida y expectativas laborales.</div>
+              <div class="content-text">Externas: medios locales, informes de ONGs cercanas, documentos del gobierno local, estudios académicos: Importancia de considerar inventarios y mapas municipales para perfil socioeconómico.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=2153" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:35:53)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">3.3</span>
+              <span class="subsection-title">Técnicas de recolección y validación en campo</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Entrevistas a líderes y actores con visión territorial (alcalde, teniente gobernador, párroco, profesores, personal de salud): Diseñar instrumentos: qué preguntar, detectar motivaciones (poder político, negocio, necesidades reales).</div>
+              <div class="content-text">Cartografía participativa y maqueta 3D para facilitar la comprensión local: Identificar fuentes de agua, estancias, sitios intangibles y espacios sensibles; validar mapas para evitar desconfianza.</div>
+              <div class="content-text">Encuestas estructuradas y narrativas cualitativas: Combinar análisis cuantitativo (poder/interés) con entrevistas descriptivas para conocer demandas y valores.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=2547" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:42:27)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="4">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">4</span>
+          <span class="section-title">Instrumentos operativos y trabajo de campo</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">4.1</span>
+              <span class="subsection-title">Talleres internos y brainstorming</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Involucrar áreas diversas: geología, medio ambiente, RR.HH., legal, gestión social: Brainstorming para generar listado amplio de stakeholders y conocimiento territorial.</div>
+              <div class="content-text">Aprovechar conocimiento previo del personal que ha trabajado o caminado la zona: Recursos humanos aporta datos sobre demandantes de empleo y perfiles locales.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=2443" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:40:43)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">4.2</span>
+              <span class="subsection-title">Mapas, maquetas y herramientas GIS</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Uso de software geográfico y cartografía participativa para ubicar mina, fuentes hídricas y poblaciones: Preferir maqueta 3D o herramientas visuales para audiencias no habituadas a planos.</div>
+              <div class="content-text">Validación comunitaria del mapa para evitar desconfianza y falsos entendidos: Explicar distancias y efectos potenciales (e.g., contaminación aguas abajo) en términos simples.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=2657" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:44:17)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">4.3</span>
+              <span class="subsection-title">Consideraciones finales sobre ejecución y planificación</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Incluir a todos los pobladores en el discurso, enfatizando interés por temas tangibles e intangibles: Evitar centrarse solo en líderes; comunicar alcance y límites del presupuesto.</div>
+              <div class="content-text">Proactividad en identificar ONGs ambientales y actores aguas abajo por su posible influencia: Estas ONG pueden asesorar poblaciones y orientar la narrativa en conflictos.</div>
+              <div class="content-text">Gestión comunitaria como planificación estratégica: Elaborar plan con objetivos, monitoreo y evaluación (ciclo planear-hacer-verificar-actuar).</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=2760" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:46:00)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="5">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">5</span>
+          <span class="section-title">Clasificación analítica y criterios de priorización</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">5.1</span>
+              <span class="subsection-title">Criterios principales</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Posición/actitud: grado de apoyo u oposición hacia la empresa: Escalas de grises entre apoyo total y oposición total; motivaciones variadas (justicia social, aspiraciones personales).</div>
+              <div class="content-text">Poder e influencia: capacidad para afectar decisiones y movilizar a la comunidad: Movilización depende del perfil y legitimidad del líder.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=3044" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:50:44)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">5.2</span>
+              <span class="subsection-title">Temporalidad, legitimidad y urgencia</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Temporalidad: dirigentes “lame duck” o en salida tienen menor poder efectivo: Cargos rotatorios afectan la vigencia del poder; monitorear cambios generacionales.</div>
+              <div class="content-text">Legitimidad: nivel en que las demandas son consideradas válidas (títulos, ancestralidad): Diferenciar peticiones legítimas de actos con motivaciones personales o extorsivas.</div>
+              <div class="content-text">Urgencia: priorizar demandas según riesgo (derrames, escapes de agua, contaminación son urgentes): Negociaciones por tierras o solicitudes económicas pueden ser relevantes pero menos urgentes.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=3060" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:51:00)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">5.3</span>
+              <span class="subsection-title">Ejemplos y casos prácticos</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Petición de financiamiento para empresa de seguridad por un comunero durante cierre de mina: Dilema: demanda no presupuestada y posible bloqueo de permiso; consecuencias regulatorias (sanción OEFA).</div>
+              <div class="content-text">Conflicto por venta de tierras donde nueva directiva niega compraventa inscrita en registros públicos: Ilustra discrepancia entre formalidad legal y validación comunitaria.</div>
+              <div class="content-text">Impactos concretos sobre recursos hídricos (secar o mover lagunas): Necesidad de sinceridad técnica y propuestas alternativas (reservorios, garantía de abastecimiento por décadas).</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=3201" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(00:53:21)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="6">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">6</span>
+          <span class="section-title">Matrices de poder-interés y estrategias de atención</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">6.1</span>
+              <span class="subsection-title">Modelo poder-interés y perfiles de actuación</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Eje vertical: poder (alto/bajo); eje horizontal: interés (alto/bajo): Identificar actores en cuadrantes para definir estrategia (relación estrecha, mantener satisfechos, monitoreo).</div>
+              <div class="content-text">Perfiles típicos: Alto poder / alto interés: dirigentes políticos locales o comités con aspiraciones; requieren coordinación proactiva y propuestas macro. Alto poder / bajo interés: propietarios con recursos o pequeños empresarios; mantener satisfechos mostrando oportunidades económicas. Bajo poder / alto interés: activistas o líderes emergentes; monitoreo y diálogo para comprender motivaciones. Bajo poder / bajo interés: población general; monitoreo y gestión de necesidades a través de proyectos.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=3984" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:06:24)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">6.2</span>
+              <span class="subsection-title">Aplicación práctica y señales de alerta</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Detectar motivaciones: justicia social genuina vs búsqueda de protagonismo político o lucro: Entrevistas estructuradas deben indagar si buscan trabajo, negocio, dinero o bienes comunitarios.</div>
+              <div class="content-text">Indicadores de riesgo: pérdida de comunicación fluida con dirigentes, historial negativo por exploraciones previas, presencia de ONGs o alianzas externas: Monitoreo constante del contexto político y rotación de liderazgos para anticipar cambios.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=4056" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:07:36)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="7">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">7</span>
+          <span class="section-title">Historia relacional, exploraciones previas y memoria comunitaria</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">7.1</span>
+              <span class="subsection-title">Impacto del historial en la percepción</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">La intervención de la empresa inicia desde exploraciones; la comunidad percibe continuidad entre actores aunque cambie la razón social: Ofertas incumplidas en etapas de exploración generan desconfianza y reclamos futuros.</div>
+              <div class="content-text">No exigir documentación registral a comunidades para validar promesas pasadas: Tratar historiales con sensibilidad y reconocer percepciones acumuladas.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=4910" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:21:50)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">7.2</span>
+              <span class="subsection-title">Dinámicas temporales y liderazgo generacional</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Cambios generacionales y de liderazgo (jóvenes que maduran, rotación de presidentes) alteran el mapa de stakeholders: Conflictos internos e intercomunitarios pueden surgir por liderazgo emergente o disputa por tierras.</div>
+              <div class="content-text">Revisiones periódicas del mapeo para incorporar nuevas comunidades o cambios en el área de influencia directa: Recomenzar procesos si la identificación de comunidades (ID) cambia.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=5803" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:36:43)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="8">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">8</span>
+          <span class="section-title">Cosmovisión y enfoque cultural en la relación comunitaria</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">8.1</span>
+              <span class="subsection-title">Definición y aplicación práctica</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Cosmovisión: conjunto de percepciones, creencias, valores y actitudes que actúan como filtro para interpretar la realidad: Influyen en la confianza en la justicia, en la interpretación de acciones empresariales y en la respuesta a propuestas técnicas.</div>
+              <div class="content-text">Estrategia: trabajar sobre el filtro existente, no intentar cambiarlo: Buscar puntos en común y diseñar mensajes y proyectos comprensibles y respetuosos del marco cultural.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=5218" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:26:58)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">8.2</span>
+              <span class="subsection-title">Comunicación adaptada y respeto cultural</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Evitar tecnicismos en estudios; traducir información a formatos y propuestas concretas (proyectos de agua, canales, protección de cultivos): Usar materiales visuales y validar propuestas con la comunidad para legitimarlas.</div>
+              <div class="content-text">Considerar sistemas de justicia y organización comunal tradicionales: No imponer requisitos documentales urbanos; privilegiar diálogo y registro comprensible.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=5310" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:28:30)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="9">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">9</span>
+          <span class="section-title">Gestión proactiva, monitoreo y evaluación</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">9.1</span>
+              <span class="subsection-title">Sistema de gestión proactiva</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">La gestión comunitaria requiere planificación similar a otras áreas operativas: objetivos, indicadores, recursos y cronograma: Evitar enfocarse sólo en apagar incendios; priorizar prevención mediante conocimiento y planificación.</div>
+              <div class="content-text">Conocimiento del entramado actual más valioso que reacciones aisladas: Actualizar mapeos y mantener relaciones continuas con actores clave.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=6490" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:48:10)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">9.2</span>
+              <span class="subsection-title">Ciclo operativo: planificar, ejecutar, monitorear y corregir</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Fases: mapeo e identificación, comunicación y negociación, monitoreo continuo, evaluación y reajuste: Aplicar ciclo PDCA (planear-hacer-verificar-actuar) en relaciones comunitarias.</div>
+              <div class="content-text">Comunicación constante y bilateral como elemento clave: Establecer plan estratégico de comunicación para conocer percepciones y el filtro cultural de la población.</div>
+              <div class="content-text">Monitoreo periódico (cada 3-6 meses) para detectar cambios de ánimo, riesgos psicosociales y corte del diálogo: Observación de respuestas y no-respuestas como indicador de riesgo; no asumir casualidad tras varias ausencias.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=7034" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:57:14)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="10">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">10</span>
+          <span class="section-title">Conclusiones y recomendaciones operativas</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">10.1</span>
+              <span class="subsection-title">Principios clave</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Transparencia y sinceridad técnica ante impactos concretos (agua, relaves): Proponer alternativas viables (reservorios, represas, garantías de abastecimiento).</div>
+              <div class="content-text">Priorizar proyectos sostenibles sobre dádivas: Enfocar en beneficios comunitarios duraderos: servicios, capacitación y mejoras productivas.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=6994" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:56:34)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">10.2</span>
+              <span class="subsection-title">Acciones recomendadas</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Diseñar y ejecutar un plan estratégico de relaciones comunitarias con presupuesto claro: Incorporar conocimientos técnicos sobre financiación estatal (obras por impuestos) y gestión de expedientes.</div>
+              <div class="content-text">Mantener monitoreo del contexto político, rotación de liderazgos y alianzas externas: Realizar entrevistas descriptivas para identificar demandas reales y valores comunitarios.</div>
+              <div class="content-text">Gestionar expectativas mediante comunicación continua, validación en campo y coordinación con actores estatales para proyectos conjuntos: Comunicar claramente qué se puede y no se puede hacer, ofrecer alternativas técnicas comprensibles y acompañar diálogo con gestores técnicos cuando sea necesario.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=7137" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(01:58:57)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" data-section="11">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div style="display: flex; align-items: center">
+          <span class="section-number">11</span>
+          <span class="section-title">Enfoque de género y participación diferenciada</span>
+        </div>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="section-content">
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">11.1</span>
+              <span class="subsection-title">Reconocimiento de liderazgos femeninos y dinámicas familiares</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Incluir perspectiva de género en diagnóstico y comunicación comunitaria: Identificar lideresas y explorar voluntad de trabajo y roles económicos de mujeres y varones.</div>
+              <div class="content-text">Trabajo como factor de empoderamiento femenino: Empleo en la minería puede permitir a mujeres disponer de recursos y mejorar dinámicas familiares; también puede generar tensiones en hogares con comportamientos inadecuados.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=7210" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(02:00:10)</span></a>
+            </div>
+          </div>
+        </div>
+        <div class="subsection">
+          <div class="subsection-header" onclick="toggleSubsection(this)">
+            <div style="display: flex; align-items: center">
+              <span class="subsection-number">11.2</span>
+              <span class="subsection-title">Recolección de percepciones diferenciadas</span>
+            </div>
+            <span class="toggle-icon">▼</span>
+          </div>
+          <div class="subsection-content">
+            <div class="content-item">
+              <div class="content-text">Indagar disposición al empleo, prioridades comunitarias y variación en valoración del tema comunitario: Preguntar por motivaciones individuales y colectivas para entender integración laboral y expectativas.</div>
+              <div class="content-text">Registrar variaciones generacionales y de género en liderazgo y aspiraciones: Actualizar el mapeo de poder para reflejar cambios recientes y evitar usar mapas obsoletos.</div>
+              <a href="https://www.youtube.com/watch?v=G8BNM0yzc6Q&start=7235" class="youtube-link" target="_blank">Ver en YouTube <span class="timestamp">(02:00:35)</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="footer">
+      <a href="https://www.edumin.pe/" target="_blank">
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LOGO%20BLANCO%20CANVA-mIKMypQ452RzmXVMUadb6mnvPaejXD.png" alt="EDUMIN Logo" class="footer-logo" />
+      </a>
+      <p class="footer-text">
+        <span style="display: block; font-weight: bold">Contenido desarrollado por EDUMIN - Centro de Capacitación Especializado en Minería, Industria y Negocios</span>
+        <span style="display: block; font-style: italic">Material exclusivo para estudiantes de EDUMIN</span>
+        <a href="https://www.edumin.pe/" target="_blank" style="color: var(--color-principal); text-decoration: none; display: block">https://www.edumin.pe/</a>
+      </p>
+    </div>
+
+    <script>
+      const TITULO_DIPLOMADO = "Prevención de la Conflictividad, Riesgos Sociales y Responsabilidad Social Minera".toUpperCase();
+      const TITULO_CLASE = "CLASE 15: RELACIONES COMUNITARIAS Y GRUPOS DE INTERÉS - 1RA PARTE".toUpperCase();
+
+      const elementoDiplomado = document.getElementById("tituloDiplomado");
+      if (elementoDiplomado) {
+        elementoDiplomado.innerText = TITULO_DIPLOMADO;
+      }
+
+      document.title = TITULO_CLASE;
+      const tituloPrincipal = document.getElementById("tituloPrincipal");
+      if (tituloPrincipal) {
+        tituloPrincipal.innerText = TITULO_CLASE;
+      }
+
+      const tituloCompacto = document.getElementById("tituloCompacto");
+      if (tituloCompacto) {
+        tituloCompacto.innerText = TITULO_CLASE;
+      }
+
+      function toggleSection(element) {
+        const section = element.closest(".section");
+        const wasActive = section.classList.contains("active");
+
+        section.classList.toggle("active");
+
+        if (wasActive) {
+          const subsections = section.querySelectorAll(".subsection");
+          subsections.forEach((subsection) => {
+            subsection.classList.remove("active");
+          });
+        }
+      }
+
+      function toggleSubsection(element) {
+        const subsection = element.closest(".subsection");
+        subsection.classList.toggle("active");
+      }
+
+      function expandAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.add("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.add("active");
+        });
+      }
+
+      function collapseAll() {
+        const sections = document.querySelectorAll(".section");
+        sections.forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        const subsections = document.querySelectorAll(".subsection");
+        subsections.forEach((subsection) => {
+          subsection.classList.remove("active");
+        });
+      }
+
+      function debounce(func, delay) {
+        let timeout;
+        return function (...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func.apply(this, args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, delay);
+        };
+      }
+
+      function clearSearch() {
+        const searchInput = document.getElementById("searchInput");
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        searchInput.value = "";
+        clearBtn.style.display = "none";
+        searchContent();
+        searchInput.focus();
+      }
+
+      const createDiacriticInsensitiveRegex = (term) => {
+        const charMap = {
+          a: "[aáAÁ]",
+          e: "[eéEÉ]",
+          i: "[iíIÍ]",
+          o: "[oóOÓ]",
+          u: "[uúUÚ]",
+        };
+
+        const regexString = term
+          .split("")
+          .map((char) => {
+            const lowerChar = char.toLowerCase();
+            return charMap[lowerChar] || char;
+          })
+          .join("");
+
+        return new RegExp(`(${regexString})`, "gi");
+      };
+
+      function searchContent() {
+        const inputElement = document.getElementById("searchInput");
+        const searchTerm = inputElement.value.trim();
+
+        const searchableElements = document.querySelectorAll(".content-text, .section-title, .subsection-title");
+        let found = false;
+        let firstMatchElement = null;
+
+        document.querySelectorAll(".section.active").forEach((el) => el.classList.remove("active"));
+        document.querySelectorAll(".subsection.active").forEach((el) => el.classList.remove("active"));
+        searchableElements.forEach((element) => {
+          element.innerHTML = element.getAttribute("data-original-text") || element.textContent;
+        });
+
+        if (searchTerm.length < 3) {
+          return;
+        }
+
+        const searchRegex = createDiacriticInsensitiveRegex(searchTerm);
+
+        searchableElements.forEach((element) => {
+          const originalText = element.getAttribute("data-original-text") || element.textContent;
+
+          if (searchRegex.test(originalText)) {
+            found = true;
+
+            element.innerHTML = originalText.replace(searchRegex, `<span class="highlight">$1</span>`);
+
+            const subsection = element.closest(".subsection");
+            if (subsection) {
+              subsection.classList.add("active");
+              subsection.closest(".section")?.classList.add("active");
+            } else if (element.classList.contains("section-title")) {
+              element.closest(".section")?.classList.add("active");
+            }
+
+            if (!firstMatchElement) {
+              firstMatchElement = element;
+            }
+          }
+        });
+
+        if (firstMatchElement) {
+          requestAnimationFrame(() => {
+            firstMatchElement.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          });
+        } else if (searchTerm.length >= 3) {
+          alert("No se encontraron resultados para: " + searchTerm);
+        }
+      }
+
+      const debouncedSearch = debounce(searchContent, 300);
+
+      document.getElementById("searchInput").addEventListener("input", function () {
+        const clearBtn = document.querySelector(".search-actions .clear-search");
+        clearBtn.style.display = this.value.length > 0 ? "block" : "none";
+        debouncedSearch();
+      });
+
+      document.getElementById("searchInput").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          clearTimeout(this._timeoutId);
+          searchContent();
+        }
+      });
+
+      // --- Lógica del Header Compacto ---
+      const header = document.querySelector(".header");
+      const headerSpacer = document.querySelector(".header-spacer");
+      let initialHeaderHeight = 0; // Altura del header original
+      let compactHeaderHeight = 0; // Altura del header en modo compacto
+      let scrollTriggerPoint = 0; // Punto de scroll para activar el cambio
+
+      function handleHeaderState() {
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        if (scrollY > scrollTriggerPoint) {
+          if (!header.classList.contains("compact")) {
+            header.classList.add("compact");
+            headerSpacer.style.height = `${initialHeaderHeight}px`;
+          }
+        } else {
+          if (header.classList.contains("compact")) {
+            header.classList.remove("compact");
+            headerSpacer.style.height = "0px";
+          }
+        }
+      }
+
+      function initializeHeader() {
+        initialHeaderHeight = header.offsetHeight;
+        const headerClone = header.cloneNode(true);
+        headerClone.classList.add("compact");
+        headerClone.style.visibility = "hidden";
+        headerClone.style.position = "absolute";
+        document.body.appendChild(headerClone);
+        compactHeaderHeight = headerClone.offsetHeight;
+        document.body.removeChild(headerClone);
+
+        scrollTriggerPoint = initialHeaderHeight - compactHeaderHeight;
+      }
+
+      document.addEventListener("DOMContentLoaded", initializeHeader);
+      window.addEventListener("scroll", handleHeaderState);
+      window.addEventListener("resize", debounce(initializeHeader, 200));
+    </script>
+  </body>
+</html>
